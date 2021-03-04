@@ -1,11 +1,11 @@
-import Point from "../common/Point";
 import {AnimationEvent} from "../animation/BaseAnimation";
+import Vector from "../common/Vector";
 
 
 export interface IMouseEventConsumer {
-    onMouseMove: (point: Point, event: MouseEvent)=>void;
-    onMouseUp: (point: Point, event: MouseEvent)=>void;
-    onMouseDown: (point: Point, event: MouseEvent)=>void;
+    onMouseMove: (point: Vector, event: MouseEvent)=>void;
+    onMouseUp: (point: Vector, event: MouseEvent)=>void;
+    onMouseDown: (point: Vector, event: MouseEvent)=>void;
 }
 
 export interface IAnimationParams {

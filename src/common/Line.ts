@@ -1,16 +1,15 @@
-import Point from "./Point";
-import AngleUtils from "../utils/AngleUtils";
-import Vector from "./Vector";
+import {AngleUtils} from "../utils";
+import {Vector} from "./Vector";
 
-class Line {
-    constructor(pointA: Point, pointB: Point) {
+export class Line {
+    constructor(pointA: Vector, pointB: Vector) {
         this.pointA = pointA;
         this.pointB = pointB;
     }
 
-    pointA: Point;
+    pointA: Vector;
 
-    pointB: Point;
+    pointB: Vector;
 
     getSlope() {
         return AngleUtils.getSlope(this.pointA, this.pointB);
@@ -28,5 +27,3 @@ class Line {
         return new Vector(this.getSlope(), 1);
     }
 }
-
-export default Line;

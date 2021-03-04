@@ -1,7 +1,7 @@
-import BaseShape from "../shape/BaseShape";
-import Point from "../common/Point";
+import {BaseShape} from "../shape";
+import {Vector} from "../common";
 
-class DrawingBoard {
+export class DrawingBoard {
 
     public elementId = '';
 
@@ -75,12 +75,12 @@ class DrawingBoard {
         }
     };
 
-    public getRelativePoint(event: MouseEvent): Point {
+    public getRelativePoint(event: MouseEvent): Vector {
         const bound = this.element.getBoundingClientRect();
-        return new Point(event.clientX - bound.x, event.clientY - bound.y);
+        return new Vector(event.clientX - bound.x, event.clientY - bound.y);
     }
 
-    public getShapeByPoint(point: Point) {
+    public getShapeByPoint(point: Vector) {
         for (let index = this.shapeList.length -1; index >= 0; index--) {
             const shape = this.shapeList[index];
             if(shape.pointInShape(point) || shape.pointInBound(point)){
@@ -117,5 +117,3 @@ class DrawingBoard {
         });
     }
 }
-
-export default DrawingBoard;

@@ -1,19 +1,19 @@
-import BaseShape from "./BaseShape";
-import Point from "../common/Point";
-import BoundUtils from "../utils/BoundUtils";
-import {IShapeStyle} from "../types/style";
+import {BaseShape} from "./";
+import {BoundUtils} from "../utils";
+import {IShapeStyle} from "../types";
+import {Vector} from "../common";
 
-class Polygon extends BaseShape {
+export class Polygon extends BaseShape {
 
-    constructor(points: Array<Point>, style: IShapeStyle) {
+    constructor(points: Array<Vector>, style: IShapeStyle) {
         super(points, style);
     }
 
-    pointInBound(point: Point): boolean {
+    pointInBound(point: Vector): boolean {
         return BoundUtils.pointInLine(this.points, point, 1, true);
     }
 
-    pointInShape(point: Point): boolean {
+    pointInShape(point: Vector): boolean {
         return BoundUtils.pointInPolygon(this.points, point);
     }
 
@@ -32,5 +32,3 @@ class Polygon extends BaseShape {
         }
     }
 }
-
-export default Polygon;

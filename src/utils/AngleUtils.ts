@@ -1,15 +1,13 @@
-import Point from "../common/Point";
-import Line from "../common/Line";
-import Vector from "../common/Vector";
+import {Line, Vector} from "../common";
 
-class AngleUtils {
+export class AngleUtils {
 
     /**
      * get tow point slope
      * @param pointA
      * @param pointB
      */
-    static getSlope(pointA: Point, pointB: Point): number {
+    static getSlope(pointA: Vector, pointB: Vector): number {
         return (pointA.y - pointB.y) / (pointA.x - pointB.x);
     }
 
@@ -30,7 +28,7 @@ class AngleUtils {
      * @param lineA
      * @param lineB
      */
-    static getIntersection(lineA: Line, lineB: Line): Point {
+    static getIntersection(lineA: Line, lineB: Line): Vector {
         if ((lineA.pointA.x === lineB.pointA.x && lineA.pointA.y === lineB.pointA.y)
             || (lineA.pointA.x === lineB.pointB.x && lineA.pointA.y === lineB.pointB.y)) {
             return lineA.pointA.clone();
@@ -39,7 +37,7 @@ class AngleUtils {
             || (lineA.pointB.x === lineB.pointB.x && lineA.pointB.y === lineB.pointB.y)) {
             return lineA.pointB.clone();
         }
-        return new Point();
+        return new Vector();
     }
 
     /**
@@ -48,20 +46,20 @@ class AngleUtils {
      * @param lineB
      * @param radius
      */
-    static getArcCenterPoint(lineA: Line, lineB: Line, radius: number): Point {
+    static getArcCenterPoint(lineA: Line, lineB: Line, radius: number): Vector {
         const kLineA = lineA.getSlope();
         const angleA = Math.atan(kLineA);
         const angleB = this.getRadian(lineA, lineB) / 2;
         const intersectionPoint = this.getIntersection(lineA, lineB);
         const pointX = radius / Math.sqrt(Math.pow(Math.sin(angleA), 2) * (Math.pow(Math.atan(angleA + angleB), 2) + 1)) + intersectionPoint.x;
         const pointY = Math.tan(angleA + angleB) * (pointX - intersectionPoint.x) + intersectionPoint.y;
-        return new Point(pointX, pointY);
+        return new Vector(pointX, pointY);
     }
 
     /**
      * get curve start point and end point
      */
-    static getLineAnglePoint(lineA: Line, lineB: Line, radius: number, intersectionPoint: Point): Line {
+    static getLineAnglePoint(lineA: Line, lineB: Line, radius: number, intersectionPoint: Vector): Line {
         const angle = this.getRadian(lineA, lineB) / 2;
         console.log(lineA, lineB, angle, lineA.getSlope(), lineB.getSlope());
         let pointAX = intersectionPoint.x - (radius / Math.tan(angle) * Math.sqrt(Math.pow(lineA.getSlope(), 2) + 1));
@@ -74,8 +72,6 @@ class AngleUtils {
             pointBX = intersectionPoint.x * 2 - pointBX;
         }
         const pointBY = lineB.getSlope() * (intersectionPoint.x - pointBX) + intersectionPoint.y;
-        return new Line(new Point(pointAX, pointAY), new Point(pointBX, pointBY));
+        return new Line(new Vector(pointAX, pointAY), new Vector(pointBX, pointBY));
     }
 }
-
-export default AngleUtils;

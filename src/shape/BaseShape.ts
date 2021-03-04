@@ -1,11 +1,11 @@
-import Point from "../common/Point";
-import {IShapeStyle} from "../types/style";
-import {IMouseEventConsumer} from "../types/lib";
-import BoundingClientRect from "../common/BoundingClientRect";
+import {IMouseEventConsumer, IShapeStyle} from "../types";
+import {BoundingClientRect} from "../common";
+import {Vector} from "../common";
 
-abstract class BaseShape implements IMouseEventConsumer {
 
-    protected constructor(points: Array<Point>, style: IShapeStyle = {}) {
+export abstract class BaseShape implements IMouseEventConsumer {
+
+    protected constructor(points: Array<Vector>, style: IShapeStyle = {}) {
         this.style = style;
         this.points = points;
         const xList = points.map(point => point.x);
@@ -32,7 +32,7 @@ abstract class BaseShape implements IMouseEventConsumer {
     /**
      * shape point list
      */
-    protected points: Array<Point> = [];
+    protected points: Array<Vector> = [];
 
     /**
      * participating in volume/range collisions
@@ -44,7 +44,7 @@ abstract class BaseShape implements IMouseEventConsumer {
     /**
      * drag last point
      */
-    private lastPoint: Point | undefined;
+    private lastPoint: Vector | undefined;
 
     /**
      * enable drag
@@ -57,6 +57,17 @@ abstract class BaseShape implements IMouseEventConsumer {
     private canMove: boolean = false;
 
     /**
+     * on animation  running, if is [false], isn't run by animation runner
+     */
+    public canAnimated: boolean = true;
+
+
+    /**
+     * set keep animation after drag
+     */
+    public keepAnimationAfterDrag: boolean = true;
+
+    /**
      * shape bound rect
      */
     public boundingClientRect: BoundingClientRect;
@@ -64,14 +75,15 @@ abstract class BaseShape implements IMouseEventConsumer {
     /**
      * check point on the inside
      */
-    abstract pointInShape(point: Point): boolean;
+    abstract pointInShape(point: Vector): boolean;
 
     /**
      * check point in shape border or in line
      */
-    abstract pointInBound(point: Point): boolean;
+    abstract pointInBound(point: Vector): boolean;
 
-    onMouseDown(point: Point, event: MouseEvent) {
+    onMouseDown(point: Vector, event: MouseEvent) {
+        this.canAnimated = false;
         if (!this.drag) {
             return;
         }
@@ -79,7 +91,7 @@ abstract class BaseShape implements IMouseEventConsumer {
         this.lastPoint = point;
     };
 
-    onMouseMove(point: Point, event: MouseEvent) {
+    onMouseMove(point: Vector, event: MouseEvent) {
         if (!this.drag || !this.canMove) {
             return;
         }
@@ -90,19 +102,25 @@ abstract class BaseShape implements IMouseEventConsumer {
     }
 
 
-    onMouseUp(point: Point, event: MouseEvent) {
+    onMouseUp(point: Vector, event: MouseEvent) {
         this.canMove = false;
+        if (this.keepAnimationAfterDrag) {
+            this.canAnimated = true;
+        }
     }
 
-    public moveTo(point: Point) {
-        // @ts-ignore
-        this.move(point.x - this.lastPoint?.x,point.y - this.lastPoint?.y);
-        this.lastPoint = point;
+    public moveTo(point: Vector) {
+        this.move(this.lastPoint ? point.x - this.lastPoint.x : 0, this.lastPoint ? point.y - this.lastPoint.y : 0, point);
     }
 
-    public move(x: number, y:number){
+    public move(x: number, y: number, point: Vector | undefined = undefined) {
         this.points.forEach(item => item.move(x, y));
         this.update();
+        if (!this.lastPoint) {
+            this.lastPoint = point
+        } else {
+            this.lastPoint.move(x, y);
+        }
     }
 
     public updateFn: Function | undefined;
@@ -152,5 +170,3 @@ abstract class BaseShape implements IMouseEventConsumer {
      */
     abstract draw(): void;
 }
-
-export default BaseShape;

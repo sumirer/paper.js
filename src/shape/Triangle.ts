@@ -1,13 +1,11 @@
-import BaseShape from "./BaseShape";
-import Point from "../common/Point";
-import BoundUtils from "../utils/BoundUtils";
-import {ITriangleStyle} from "../types/style";
-import AngleUtils from "../utils/AngleUtils";
-import Line from "../common/Line";
+import {BaseShape} from "./";
+import {BoundUtils, AngleUtils} from "../utils";
+import {ITriangleStyle} from "../types";
+import {Line, Vector} from "../common";
 
-class Triangle extends BaseShape {
+export class Triangle extends BaseShape {
 
-    constructor(points: Array<Point>, style: ITriangleStyle = {}) {
+    constructor(points: Array<Vector>, style: ITriangleStyle = {}) {
         super(points, style);
         if (points.length < 3) {
             throw Error(`triangle must have more than 2 point, got ${points?.length} point`)
@@ -21,15 +19,15 @@ class Triangle extends BaseShape {
 
     name = 'triangle';
 
-    pointInBound(point: Point): boolean {
+    pointInBound(point: Vector): boolean {
         return BoundUtils.pointInLine(this.points, point, 1, true);
     }
 
-    pointInShape(point: Point): boolean {
+    pointInShape(point: Vector): boolean {
         return BoundUtils.pointInPolygon(this.points, point);
     }
 
-    getBorderRadiusPath(): Array<Point> {
+    getBorderRadiusPath(): Array<Vector> {
         const list = [];
         const line1 = AngleUtils.getLineAnglePoint(new Line(this.points[0], this.points[1]),
             new Line(this.points[1], this.points[2]), this.borderRadius, this.points[1]);
@@ -75,5 +73,3 @@ class Triangle extends BaseShape {
     }
 
 }
-
-export default Triangle;

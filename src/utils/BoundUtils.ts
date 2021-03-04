@@ -1,7 +1,6 @@
-import Point from "../common/Point";
-import BoundingClientRect from "../common/BoundingClientRect";
+import {Vector, BoundingClientRect} from "../common";
 
-class BoundUtils {
+export class BoundUtils {
 
     /**
      * check point in line
@@ -10,7 +9,7 @@ class BoundUtils {
      * @param checkPoint
      * @param lineWidth
      */
-    static inLine(pointA: Point, pointB: Point, checkPoint: Point, lineWidth = 1): boolean {
+    static inLine(pointA: Vector, pointB: Vector, checkPoint: Vector, lineWidth = 1): boolean {
         // if line width is 1px use line
         if (lineWidth === 1) {
             return (checkPoint.x - pointA.x) * (pointA.y - pointB.y) == (pointA.x - pointB.x) * (checkPoint.y - pointA.y) &&
@@ -34,7 +33,7 @@ class BoundUtils {
      * @param lineWidth line width,if line width not'n 1px use shape function vif this line
      * @param close shape is close
      */
-    static pointInLine(points: Array<Point>, checkPoint: Point, lineWidth = 1, close = true): boolean {
+    static pointInLine(points: Array<Vector>, checkPoint: Vector, lineWidth = 1, close = true): boolean {
         for (let index = 0, afterIndex = 1; index < points.length; index++, afterIndex++) {
             const point = points[index];
             // if is close shape,the last line check
@@ -53,7 +52,7 @@ class BoundUtils {
      * @param points
      * @param point
      */
-    static pointInPolygon(points: Array<Point>, point: Point): boolean {
+    static pointInPolygon(points: Array<Vector>, point: Vector): boolean {
         let oddNodes = false;
         for (let i = 0, j = points.length - 1; i < points.length; i++) {
             if (points[i].y < point.y
@@ -69,10 +68,6 @@ class BoundUtils {
         return oddNodes;
     }
 
-    // static getCrossPoint(lineA: Point, lineB: Point): Point | undefined {
-    //
-    // }
-
     static getBoundCrossRect(boundA: BoundingClientRect, boundB: BoundingClientRect): BoundingClientRect | undefined {
         // out of bound
         if (boundB.minX > boundA.maxX || boundB.maxX < boundA.minX || boundB.maxY > boundA.minY || boundB.minY < boundA.maxY) {
@@ -84,11 +79,11 @@ class BoundUtils {
             const maxX = boundB.maxX;
             let minY = 0;
             let maxY = 0;
-            if(boundA.maxY <= boundB.maxY && boundA.minY >= boundB.minY){
+            if (boundA.maxY <= boundB.maxY && boundA.minY >= boundB.minY) {
                 minY = boundA.minY;
                 maxY = boundA.maxY;
             }
-            if(boundB.maxY > boundA.minY && boundB.maxY<boundA.maxY){
+            if (boundB.maxY > boundA.minY && boundB.maxY < boundA.maxY) {
 
             }
             return new BoundingClientRect(minX, minY, maxX, maxY);
@@ -98,5 +93,3 @@ class BoundUtils {
         }
     }
 }
-
-export default BoundUtils;
