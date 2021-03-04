@@ -1,4 +1,4 @@
-import {Polygon, Triangle, Vector, AnimationEvent, Linear, DrawingBoard} from './src/index'
+import {Polygon, Triangle, Vector, AnimationEvent, Linear, DrawingBoard, Bezier, VariableSpeed} from './src/index'
 
 class Test {
     public run() {
@@ -19,8 +19,10 @@ class Test {
             borderRadius: 5
         }));
         board1.paintAll();
-        const animation = new Linear(new Vector(100, 100), {duration: 5000});
+        // const animation1 = new Linear(new Vector(400, 400), {duration: 5000});
+        const animation = new Bezier(new Vector(0, 1), new Vector(1, 0), new Vector(400, 400), {duration: 5000});
         animation.addShape(tr);
+        // animation1.addShape(tr);
         animation.addEventListener((status: AnimationEvent) => {
             if (status === AnimationEvent.REVERSE) {
                 animation.forward();
@@ -29,7 +31,27 @@ class Test {
                 animation.reverse();
             }
         });
-        animation.reverse();
+        // animation1.addEventListener((status: AnimationEvent) => {
+        //     if (status === AnimationEvent.REVERSE) {
+        //         animation1.forward();
+        //     }
+        //     if (status === AnimationEvent.FORWARD) {
+        //         animation1.reverse();
+        //     }
+        // });
+        animation.forward();
+        // animation1.forward();
+        // const animation = new VariableSpeed(new Vector(600, 800), new Vector(20, 608), {duration: 500});
+        // animation.addShape(tr);
+        // animation.addEventListener((status: AnimationEvent) => {
+        //     if (status === AnimationEvent.REVERSE) {
+        //         animation.forward();
+        //     }
+        //     if (status === AnimationEvent.FORWARD) {
+        //         animation.reverse();
+        //     }
+        // });
+        // animation.forward();
     }
 }
 

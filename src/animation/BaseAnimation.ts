@@ -11,23 +11,23 @@ export enum AnimationEvent {
 
 export abstract class BaseAnimation {
 
-    protected constructor(vector2d: Vector, params: IAnimationParams) {
+    protected constructor(params: IAnimationParams) {
         this.duration = params.duration ?? 500;
         this.runDuration = this.duration;
-        this.vector2d = vector2d;
+        // this.vector2d = vector2d;
     }
 
     public duration: number;
 
     public runDuration: number;
 
-    public vector2d: Vector;
+    // public vector2d: Vector;
 
     private listener: Array<AnimationListener> = [];
 
     public requestId: number = -1;
 
-    private itemList: Array<BaseShape> = [];
+    private itemList: Array<BaseShape | Vector> = [];
 
     private stop: boolean = false;
 
@@ -35,8 +35,8 @@ export abstract class BaseAnimation {
 
     public lastVector: Vector | undefined;
 
-    public addShape<T extends BaseShape>(shape: T) {
-        this.itemList.push(shape);
+    public addShape<T extends BaseShape>(item: T | Vector) {
+        this.itemList.push(item);
     }
 
     public addEventListener(listener: AnimationListener): void {
@@ -109,6 +109,10 @@ export abstract class BaseAnimation {
         this.requestId = (window.requestAnimationFrame || window.webkitRequestAnimationFrame)(run);
     }
 
+    /**
+     * stop animation
+     * @param eventType
+     */
     private stopAnimation(eventType: AnimationEvent): void {
         window.cancelAnimationFrame(this.requestId);
         this.requestId = -1;
@@ -120,13 +124,21 @@ export abstract class BaseAnimation {
         }
     }
 
+    /**
+     * move shape by tick time
+     * @param duration
+     */
     private runNextTick(duration: number) {
         const vector = this.runner(duration);
         if (!this.lastVector) {
             this.lastVector = vector;
         }
-        // @ts-ignore
-        this.itemList.forEach(shape => shape.canAnimated && shape.move(vector.x - this.lastVector.x, vector.y - this.lastVector.y));
+        this.itemList.forEach(shape => {
+            if (shape instanceof Vector || shape.canAnimated) {
+                // @ts-ignore
+                shape.move(vector.x - this.lastVector.x, vector.y - this.lastVector.y);
+            }
+        });
         this.lastVector = vector;
     }
 
