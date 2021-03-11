@@ -1,8 +1,7 @@
 import {Vector} from "../common";
+import {Matrix} from "./Matrix";
 
 export class IFS {
-    static IFSExpression: IFSExpression;
-
     constructor(startPoint: Vector, loopCount: number) {
         this.count = loopCount;
         this.startPoint = startPoint;
@@ -15,9 +14,16 @@ export class IFS {
 
     public startPoint: Vector;
 
+    /**
+     * matrix compute vector zero point
+     */
+    public centerPoint: Vector = new Vector(500, 500);
+
     private expressionList: IFSExpression[] = [];
 
     public probability = 0;
+
+    public matrixList: Matrix[] = [];
 
     /**
      * add expression to computed list
@@ -31,12 +37,32 @@ export class IFS {
     }
 
     /**
+     * add matrix to change point
+     * @param matrix
+     */
+    public addChangeMatrix(matrix: Matrix) {
+        this.matrixList.push(matrix);
+    }
+
+    /**
      * computed ifs get result
      */
     public pointList: Vector[] = [];
 
     public searchExpressionByProbability(probability: number): IFSExpression | undefined {
         return this.expressionList.find(item => probability <= item.probability);
+    }
+
+    /**
+     * compute new pint by matrix
+     * @param point
+     */
+    public computeWithMatrix(point: Vector): Vector{
+        let newPoint = point.changeWith(this.centerPoint);
+        for (let index = 0; index < this.matrixList.length; index++) {
+            newPoint = Vector.fromMatrix(this.matrixList[index].multiply(newPoint.toMatrix()));
+        }
+        return newPoint;
     }
 
     public startLoop() {
@@ -47,8 +73,9 @@ export class IFS {
             if (exp) {
                 lastPoint = exp.compute(lastPoint);
             }
-            const newPoint = lastPoint.clone();
-            newPoint.x+= 300;
+            let newPoint = lastPoint.clone();
+            // newPoint.x += 300;
+            newPoint = this.computeWithMatrix(newPoint);
             this.pointList.push(newPoint);
         }
     }
