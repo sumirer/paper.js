@@ -22,7 +22,6 @@ export class Bezier extends BaseAnimation {
 
     runner(time: number): Vector {
         const step = this.runDuration / this.duration;
-        console.log(step);
         return BezierUtils.getBezierCurveAnimationStep(this.startPosition, this.controlA, this.controlB, this.targetPosition, step);
     }
 

@@ -8,6 +8,8 @@ export abstract class BaseShape implements IMouseEventConsumer {
     protected constructor(points: Array<Vector>, style: IShapeStyle = {}) {
         this.style = style;
         this.points = points;
+        this.fill = !!style.fillRange;
+        this.stroke = !!style.strokeBorder;
         const xList = points.map(point => point.x);
         const yList = points.map(point => point.y);
         this.boundingClientRect = new BoundingClientRect(Math.min(...xList), Math.min(...yList), Math.max(...xList), Math.max(...yList));
@@ -49,7 +51,7 @@ export abstract class BaseShape implements IMouseEventConsumer {
     /**
      * enable drag
      */
-    protected drag: boolean = true;
+    protected drag: boolean = false;
 
     /**
      * shape can start drag tag
@@ -81,6 +83,14 @@ export abstract class BaseShape implements IMouseEventConsumer {
      * check point in shape border or in line
      */
     abstract pointInBound(point: Vector): boolean;
+
+    public enableDrag(): void {
+        this.drag = true;
+    }
+
+    public disabledDrag(): void {
+        this.drag = false;
+    }
 
     onMouseDown(point: Vector, event: MouseEvent) {
         this.canAnimated = false;

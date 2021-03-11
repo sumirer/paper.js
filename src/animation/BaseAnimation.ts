@@ -1,5 +1,5 @@
 import {BaseShape} from "../shape";
-import {AnimationListener, IAnimationParams} from "../types/lib";
+import {AnimationListener, AnimationStatusListener, IAnimationParams} from "../types/lib";
 import {Vector} from "../common";
 
 export enum AnimationEvent {
@@ -25,6 +25,8 @@ export abstract class BaseAnimation {
 
     private listener: Array<AnimationListener> = [];
 
+    private statusListener: Array<AnimationStatusListener> = [];
+
     public requestId: number = -1;
 
     private itemList: Array<BaseShape | Vector> = [];
@@ -41,6 +43,10 @@ export abstract class BaseAnimation {
 
     public addEventListener(listener: AnimationListener): void {
         this.listener.push(listener);
+    }
+
+    public addStatusListener(listener: AnimationStatusListener): void {
+        this.statusListener.push(listener);
     }
 
     /**
@@ -133,6 +139,7 @@ export abstract class BaseAnimation {
         if (!this.lastVector) {
             this.lastVector = vector;
         }
+        this.statusListener.forEach(listener => listener(duration / this.duration));
         this.itemList.forEach(shape => {
             if (shape instanceof Vector || shape.canAnimated) {
                 // @ts-ignore

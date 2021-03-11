@@ -1,17 +1,15 @@
 import {BaseShape} from "./";
 import {BoundUtils, AngleUtils} from "../utils";
-import {ITriangleStyle} from "../types";
 import {Line, Vector} from "../common";
+import {IShapeStyle} from "../types";
 
 export class Triangle extends BaseShape {
 
-    constructor(points: Array<Vector>, style: ITriangleStyle = {}) {
+    constructor(points: Array<Vector>, style: IShapeStyle = {}) {
         super(points, style);
         if (points.length < 3) {
             throw Error(`triangle must have more than 2 point, got ${points?.length} point`)
         }
-        this.fill = !!style.fillRange;
-        this.stroke = !!style.strokeBorder;
         this.borderRadius = style.borderRadius ?? 0
     }
 

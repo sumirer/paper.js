@@ -20,9 +20,7 @@ export interface IShapeStyle {
     imageSmoothingEnabled?: boolean | undefined;
     strokeStyle?: string | CanvasGradient | CanvasPattern | undefined;
     borderRadius?: number | undefined;
-}
-
-export type ITriangleStyle =  {
     fillRange?: boolean,
     strokeBorder?: boolean
-} & IShapeStyle;
+}
+
