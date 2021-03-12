@@ -116,6 +116,34 @@ export abstract class BaseAnimation {
     }
 
     /**
+     * repeat run animation
+     */
+    public repeat(): void {
+        this.stop = false;
+        this.performanceTime = 0;
+        this.runDuration = this.duration;
+        const run = (time: number) => {
+            if (this.performanceTime === 0) {
+                this.performanceTime = time;
+            }
+            this.runDuration -= (time - this.performanceTime);
+            if (this.stop) {
+                this.stopAnimation(AnimationEvent.CANCEL);
+                return
+            }
+            if(this.runDuration < 0){
+                this.runDuration = this.duration;
+            }
+            this.runNextTick(this.runDuration);
+            this.performanceTime = time;
+            // @ts-ignore
+            this.requestId = (window.requestAnimationFrame || window.webkitRequestAnimationFrame)(run);
+        };
+        // @ts-ignore
+        this.requestId = (window.requestAnimationFrame || window.webkitRequestAnimationFrame)(run);
+    }
+
+    /**
      * stop animation
      * @param eventType
      */

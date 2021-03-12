@@ -17,13 +17,21 @@ export class IFS {
     /**
      * matrix compute vector zero point
      */
-    public centerPoint: Vector = new Vector(500, 500);
+    public centerPoint: Vector = new Vector(0, 0);
 
     private expressionList: IFSExpression[] = [];
 
     public probability = 0;
 
     public matrixList: Matrix[] = [];
+
+    /**
+     * set zero point
+     * @param point
+     */
+    public setCenterPoint(point: Vector) {
+        this.centerPoint = point;
+    }
 
     /**
      * add expression to computed list
@@ -57,7 +65,7 @@ export class IFS {
      * compute new pint by matrix
      * @param point
      */
-    public computeWithMatrix(point: Vector): Vector{
+    public computeWithMatrix(point: Vector): Vector {
         let newPoint = point.changeWith(this.centerPoint);
         for (let index = 0; index < this.matrixList.length; index++) {
             newPoint = Vector.fromMatrix(this.matrixList[index].multiply(newPoint.toMatrix()));
@@ -74,7 +82,6 @@ export class IFS {
                 lastPoint = exp.compute(lastPoint);
             }
             let newPoint = lastPoint.clone();
-            // newPoint.x += 300;
             newPoint = this.computeWithMatrix(newPoint);
             this.pointList.push(newPoint);
         }
@@ -110,6 +117,6 @@ export class IFSExpression {
     compute(lastPoint: Vector): Vector {
         const x = this.xX * lastPoint.x + lastPoint.y * this.xY + this.xB;
         const y = this.yX * lastPoint.x + lastPoint.y * this.yY + this.yB;
-        return new Vector(x, y);
+        return new Vector(x, y, 1);
     }
 }

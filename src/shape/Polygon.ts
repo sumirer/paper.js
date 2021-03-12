@@ -18,6 +18,7 @@ export class Polygon extends BaseShape {
     }
 
     draw(): void {
+        this.paint?.beginPath();
         this.paint?.moveTo(this.points[0].x, this.points[0].y);
         for (let index = 1; index < this.points.length; index++) {
             this.paint?.lineTo(this.points[index].x, this.points[index].y);

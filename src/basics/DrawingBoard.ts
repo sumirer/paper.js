@@ -23,6 +23,8 @@ export class DrawingBoard {
 
     public paint: CanvasRenderingContext2D | undefined = undefined;
 
+    public lastUpdateDate: number = 0;
+
     /**
      * save all shape info data
      */
@@ -81,9 +83,9 @@ export class DrawingBoard {
     }
 
     public getShapeByPoint(point: Vector) {
-        for (let index = this.shapeList.length -1; index >= 0; index--) {
+        for (let index = this.shapeList.length - 1; index >= 0; index--) {
             const shape = this.shapeList[index];
-            if(shape.pointInShape(point) || shape.pointInBound(point)){
+            if (shape.pointInShape(point) || shape.pointInBound(point)) {
                 return shape;
             }
         }
@@ -98,6 +100,19 @@ export class DrawingBoard {
         this.shapeList.push(shape);
     }
 
+    /**
+     * remove shape
+     * @param shape
+     */
+    public removeShape<T extends BaseShape>(shape: T) {
+        for (let index = 0; index < this.shapeList.length; index++) {
+            if (this.shapeList[index] === shape) {
+                this.shapeList.splice(index, 1);
+                break;
+            }
+        }
+    }
+
     public update = () => {
         this.paintAll();
     };
@@ -109,6 +124,12 @@ export class DrawingBoard {
         if (!this.paint) {
             return;
         }
+        console.log(Date.now() -  this.lastUpdateDate );
+        // 抽帧，不进行刷新
+        if(this.lastUpdateDate !== 0 && Date.now() -  this.lastUpdateDate < 33){
+            return;
+        }
+        this.lastUpdateDate = Date.now();
         this.paint.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
         this.shapeList.forEach(item => {
             item.paint = this.paint;

@@ -25,7 +25,7 @@ export class Vector {
     }
 
     toMatrix(): Matrix {
-        return Matrix.create([[this.x], [this.y], [1]]);
+        return Matrix.create([[this.x], [this.y], [this.z]]);
     }
 
     changeWith(vector: Vector): Vector {
