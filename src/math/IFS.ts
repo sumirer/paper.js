@@ -48,7 +48,8 @@ export class IFS {
                 lastPoint = exp.compute(lastPoint);
             }
             const newPoint = lastPoint.clone();
-            newPoint.x+= 300;
+            newPoint.y+=300;
+            newPoint.x+=300;
             this.pointList.push(newPoint);
         }
     }
