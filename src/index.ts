@@ -3,3 +3,4 @@ export * from './common';
 export * from './shape';
 export * from './utils';
 export * from './basics';
+export * from './math';

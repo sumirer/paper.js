@@ -1,4 +1,3 @@
-
 /* @ts-ignore */
 import {
     Polygon,
@@ -9,9 +8,8 @@ import {
     DrawingBoard,
     Bezier,
     VariableSpeed,
-    ColorUtils, Color, PointMap
-} from './src/index'
-import {IFS, IFSExpression} from "./src/math";
+    ColorUtils, Color, PointMap, IFS, IFSExpression, Matrix
+} from './src'
 
 class Season {
     public run() {
@@ -24,41 +22,50 @@ class Season {
         });
         board.addShape(background);
 
-        const ifs = new IFS(new Vector(1000,100),60000);
+        const ifs = new IFS(new Vector(1000, 100), 90000);
+        const exp1 = new IFSExpression(0, 0, 0, 0, 100.16, 0, 0.01);
 
-
-        const exp1 = new IFSExpression(0,0,0,0,100.16,0,0.01);
         ifs.addExpression(exp1);
-        const exp2 = new IFSExpression(0.2,-0.26,0.23,0.22,0,101.6,0.07);
+        const exp2 = new IFSExpression(0.2, -0.26, 0.23, 0.22, 0, 101.6, 0.07);
         ifs.addExpression(exp2);
-        const exp3 = new IFSExpression(-0.15,0.28,0.26,0.24,0,100.44,0.07);
+        const exp3 = new IFSExpression(-0.15, 0.28, 0.26, 0.24, 0, 100.44, 0.07);
         ifs.addExpression(exp3);
-        const exp4 = new IFSExpression(0.85,0.04,-0.04,0.85,0,101.6,0.85);
+        const exp4 = new IFSExpression(0.85, 0.04, -0.04, 0.85, 0, 101.6, 0.85);
         ifs.addExpression(exp4);
+        ifs.addChangeMatrix(new Matrix([[Math.cos(Math.PI), -Math.sin(Math.PI),0], [Math.sin(Math.PI), -Math.cos(Math.PI),0],[0,0,1]]))
+        ifs.addChangeMatrix(new Matrix([[1,0,200], [0,1,600],[0,0,1]]))
         ifs.startLoop();
-        const pointMap = new PointMap(ifs.pointList,{
+
+        // const pointMap = new PointMap(ifs.pointList,{
+
+        console.log(ifs.pointList[100])
+        console.log(new Matrix([[1,0,200], [0,1,200],[0,0,1]]).multiply(new Vector(500,500).toMatrix()));
+        const pointMap = new PointMap(ifs.pointList, {
+            fillStyle: '#000',
+
             strokeStyle: '#000'
         });
 
-        const ifsf = new IFS(new Vector(1000,100),60000);
-
-
-        const expx1 = new IFSExpression(0.195,-0.488,0.344,0.433,200.4431,200.2452,0.25);
-        ifsf.addExpression(expx1);
-        const expx2 = new IFSExpression(0.462 ,0.414 ,-0.252 ,0.361 ,200.2511 ,200.5692 ,0.25);
-        ifsf.addExpression(expx2);
-        const expx3 = new IFSExpression(-0.058 ,-0.07 ,0.453 ,-0.111 ,200.5976 ,200.0969 ,0.25);
-        ifsf.addExpression(expx3);
-        const expx4 = new IFSExpression(-0.035 ,0.07 ,-0.469 ,-0.022 ,200.4884 ,200.5069 ,0.2);
-        ifsf.addExpression(expx4);
-        const expx5 = new IFSExpression(-0.637 ,0 ,0 ,0.501 ,200.8562 ,200.2513 ,0.05);
-        ifsf.addExpression(expx5);
-
-        ifsf.startLoop();
-        const pointMapf = new PointMap(ifsf.pointList,{
-            strokeStyle: '#000'
-        });
-        board.addShape(pointMapf);
+        // const ifsf = new IFS(new Vector(1000,100),60000);
+        //
+        //
+        //
+        // const expx1 = new IFSExpression(0.195,-0.488,0.344,0.433,200.4431,200.2452,0.25);
+        // ifsf.addExpression(expx1);
+        // const expx2 = new IFSExpression(0.462 ,0.414 ,-0.252 ,0.361 ,200.2511 ,200.5692 ,0.25);
+        // ifsf.addExpression(expx2);
+        // const expx3 = new IFSExpression(-0.058 ,-0.07 ,0.453 ,-0.111 ,200.5976 ,200.0969 ,0.25);
+        // ifsf.addExpression(expx3);
+        // const expx4 = new IFSExpression(-0.035 ,0.07 ,-0.469 ,-0.022 ,200.4884 ,200.5069 ,0.2);
+        // ifsf.addExpression(expx4);
+        // const expx5 = new IFSExpression(-0.637 ,0 ,0 ,0.501 ,200.8562 ,200.2513 ,0.05);
+        // ifsf.addExpression(expx5);
+        //
+        // ifsf.startLoop();
+        // const pointMapf = new PointMap(ifsf.pointList,{
+        //     strokeStyle: '#000'
+        // });
+        board.addShape(pointMap);
         board.paintAll();
 
     }
@@ -72,7 +79,6 @@ class Season {
 // 		0,-0.637 ,0 ,0 ,0.501 ,0.8562 ,0.2513 ,0.05};
 // 	double aa,bb;
 //
-
 
 
 
