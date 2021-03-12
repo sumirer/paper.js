@@ -23,8 +23,6 @@ export class DrawingBoard {
 
     public paint: CanvasRenderingContext2D | undefined = undefined;
 
-    public lastUpdateDate: number = 0;
-
     /**
      * save all shape info data
      */
@@ -124,12 +122,6 @@ export class DrawingBoard {
         if (!this.paint) {
             return;
         }
-        console.log(Date.now() -  this.lastUpdateDate );
-        // 抽帧，不进行刷新
-        if(this.lastUpdateDate !== 0 && Date.now() -  this.lastUpdateDate < 33){
-            return;
-        }
-        this.lastUpdateDate = Date.now();
         this.paint.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
         this.shapeList.forEach(item => {
             item.paint = this.paint;
