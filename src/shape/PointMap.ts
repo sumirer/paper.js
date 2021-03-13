@@ -4,9 +4,12 @@ import {Vector} from "../common";
 
 export class PointMap extends BaseShape {
 
-    constructor(points: Array<Vector>, style: IShapeStyle) {
+    constructor(points: Array<Vector>, pointSize: number,  style: IShapeStyle) {
         super(points, style);
+        this.pointSize = pointSize;
     }
+
+    public pointSize: number;
 
     pointInBound(point: Vector): boolean {
         return false;
@@ -25,7 +28,7 @@ export class PointMap extends BaseShape {
         this.paint?.beginPath();
         this.paint?.moveTo(this.points[0].x, this.points[0].y);
         for (let index = 1; index < this.points.length; index++) {
-            this.paint?.strokeRect(this.points[index].x, this.points[index].y, 1,1);
+            this.paint?.strokeRect(this.points[index].x, this.points[index].y, this.pointSize,this.pointSize);
         }
     }
 }

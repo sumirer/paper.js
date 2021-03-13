@@ -13,15 +13,20 @@ export class DrawingBoard {
 
     private mouseEventBindShape: BaseShape | undefined;
 
-    constructor(elementId: string, width = 200, height = 200) {
+    constructor(elementId: string, width = 200, height = 200, showFps = false) {
         this.elementId = elementId;
         this.canvasWidth = width;
         this.canvasHeight = height;
+        this.showFps = showFps;
         this.element = document.getElementById(this.elementId) as HTMLCanvasElement;
         this.init();
     }
 
     public paint: CanvasRenderingContext2D | undefined = undefined;
+
+    public lastUpdateDate: number = 0;
+
+    public showFps: boolean;
 
     /**
      * save all shape info data
@@ -123,6 +128,17 @@ export class DrawingBoard {
             return;
         }
         this.paint.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+        if(this.lastUpdateDate === 0){
+            this.lastUpdateDate = Date.now();
+        }
+        if(this.showFps){
+            this.paint.beginPath();
+            const fps = Math.floor(1000 / (Date.now() - this.lastUpdateDate));
+            this.lastUpdateDate = Date.now();
+            this.paint.font = '28px'
+            this.paint.fillText(`FPS: ${fps}`, 80, 30, 200);
+            console.log(fps);
+        }
         this.shapeList.forEach(item => {
             item.paint = this.paint;
             item.updateFn = this.update;
