@@ -131,18 +131,19 @@ export class DrawingBoard {
         if(this.lastUpdateDate === 0){
             this.lastUpdateDate = Date.now();
         }
-        if(this.showFps){
-            this.paint.beginPath();
-            const fps = Math.floor(1000 / (Date.now() - this.lastUpdateDate));
-            this.lastUpdateDate = Date.now();
-            this.paint.font = '28px'
-            this.paint.fillText(`FPS: ${fps}`, 80, 30, 200);
-            console.log(fps);
-        }
         this.shapeList.forEach(item => {
             item.paint = this.paint;
             item.updateFn = this.update;
             item.drawAll();
         });
+        if(this.showFps){
+            this.paint.beginPath();
+            const fps = Math.floor(1000 / (Date.now() - this.lastUpdateDate === 0? 13.3: Date.now() - this.lastUpdateDate));
+            this.lastUpdateDate = Date.now();
+            this.paint.font = '20px'
+            this.paint.fillStyle = '#333'
+            this.paint.fillText(`FPS: ${fps}`, 80, 30, 200);
+            this.paint.restore();
+        }
     }
 }

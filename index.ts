@@ -1,12 +1,12 @@
 /* @ts-ignore */
 import {
-    AnimationEvent,
+    AnimationEvent, Bezier,
     Color,
     ColorUtils,
     DrawingBoard,
-    DrawMap,
+    DrawMap, IFS, IFSExpression,
     Linear,
-    LineMap,
+    LineMap, Matrix, PointMap,
     Polygon,
     Rect,
     VariableSpeed,
@@ -35,8 +35,8 @@ class Season {
         this.boardWidth = window.innerWidth;
         this.boardHeight = window.innerHeight;
         this.board = new DrawingBoard('canvas', this.boardWidth, this.boardHeight, true);
-        this.boardTree = new DrawingBoard('canvasTree', this.boardWidth, this.boardHeight );
-        this.boardSnow = new DrawingBoard('canvasSnow', this.boardWidth, this.boardHeight, true);
+        this.boardTree = new DrawingBoard('canvasTree', this.boardWidth, this.boardHeight);
+        this.boardSnow = new DrawingBoard('canvasSnow', this.boardWidth, this.boardHeight);
     }
 
     public boardHeight: number;
@@ -58,127 +58,170 @@ class Season {
     // @ts-ignore
     public rainAnimation: VariableSpeed;
 
+    // @ts-ignore
+    public background: Polygon;
+
     public run() {
         this.addBackground();
         this.createLeafTree();
-        // this.createRain();
         this.board.paintAll();
         this.boardTree.paintAll();
-        // this.rainAnimation.forward()
-        this.startRunSnow();
-        // this.treeUpAnimation.forward();
-        setTimeout(() => {
-            this.changeTreeColor(Color.formHex('#27ae60'), Color.formHex('#ffffff'), 5000);
-        }, 1000)
+        this.startSpring();
     }
 
-    public changeTreeColor(startColor: Color, endColor: Color, duration: number) {
+    public startSpring() {
+        this.updateBackgroundColorTo(Color.formHex('#FFF8DC'), 5000, () => {
+
+        });
+        this.changeTreeColor(Color.formHex('#CDCD00'), 5000, () => {
+            this.updateBackgroundColorTo(Color.formHex('#BEBEBE'), 2000, () => {
+                this.createRain(5000, () => {
+                    this.startSummer();
+                });
+            })
+        });
+    }
+
+    public startSummer() {
+        this.changeTreeColor(Color.formHex('#228B22'), 3000, () => {
+        })
+        this.updateBackgroundColorTo(Color.formHex('#FFFACD'), 4500, () => {
+            this.updateBackgroundColorTo(Color.formHex('#EEDD82'), 4500, () => {
+
+            })
+        })
+        this.addSun(() => {
+            setTimeout(() => {
+                this.startAutumn();
+            }, 2000)
+        });
+    }
+
+    public startAutumn() {
+        this.updateBackgroundColorTo(Color.formHex('#CDCDB4'), 4000, () => {
+            this.changeTreeColor(Color.formHex("#EEB422"), 3000, () => {
+                setTimeout(()=>{
+                    this.startWinter();
+                }, 2000)
+            });
+        })
+    }
+
+    public startWinter() {
+        this.updateBackgroundColorTo(Color.formHex('#000000'), 4000, () => {
+            this.startRunSnow(55000, () => {
+            });
+            setTimeout(() => {
+                this.changeTreeColor(Color.formHex('#FFFFFF'), 2000, () => {
+                })
+            }, 3000)
+        });
+    }
+
+    public lastTreeLeafColor: string = '#ffffff'
+
+    public changeTreeColor(color: Color, duration: number, onFinish: Function) {
         const line = new Linear(new Vector(1, 0), {duration});
         line.addStatusListener((status: number) => {
-            const color = ColorUtils.getLinearGradientByStep(startColor, endColor, status).toHexString();
+            const colors = ColorUtils.getLinearGradientByStep(Color.formHex(this.lastTreeLeafColor), color, status).toHexString();
             for (let index = 0; index < this.pathList.length; index++) {
                 if (this.pathList[index].isLeaf) {
-                    this.pathList[index].color = color;
+                    this.pathList[index].color = colors;
                 }
             }
             this.boardTree.paintAll();
         })
+        line.addEventListener((e: AnimationEvent) => {
+            if (e === AnimationEvent.FORWARD) {
+                this.lastTreeLeafColor = color.toHexString();
+                onFinish();
+            }
+        })
         line.forward();
     }
 
+    public lastBackgroundColor: string = '#ffffff';
+
     public addBackground() {
-        const background = new Polygon([new Vector(), new Vector(this.boardWidth, 0), new Vector(this.boardWidth, this.boardHeight), new Vector(0, this.boardHeight)], {
-            fillStyle: '#F0FFF0',
+        this.background = new Polygon([new Vector(), new Vector(this.boardWidth, 0), new Vector(this.boardWidth, this.boardHeight), new Vector(0, this.boardHeight)], {
+            fillStyle: this.lastBackgroundColor,
             fillRange: true
         });
-        const lA = new Linear(new Vector(1, 0), {duration: 60000});
-        const lB = new Linear(new Vector(1, 0), {duration: 60000});
-        const lC = new Linear(new Vector(1, 0), {duration: 60000});
-        const lD = new Linear(new Vector(1, 0), {duration: 60000});
-        lA.addStatusListener((status: number) => {
-            if (status <= 0.25) {
-                // @ts-ignore
-                // background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#F0FFF0'), Color.formHex('#FFE7BA'), status / 0.25).toHexString();
-                background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#F0FFF0'), Color.formHex('#000000'), status / 0.25).toHexString();
-            }
-            if (status > 0.25 && status <= 0.5) {
-                // @ts-ignore
-                background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFE7BA'), Color.formHex('#FFE4B5'), (status - 0.25) / 0.25).toHexString();
-            }
-            if (status > 0.5 && status <= 0.75) {
-                // @ts-ignore
-                background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFE4B5'), Color.formHex('#FFFFFF'), (status - 0.5) / 0.25).toHexString();
-            }
-            if (status > 0.75) {
-                // @ts-ignore
-                background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFFFFF'), Color.formHex('#F0FFF0'), (status - 0.75) / 0.25).toHexString();
-            }
-            background.makeStyle();
-            this.board.paintAll();
-        });
-        this.board.addShape(background);
-        lA.forward();
+        this.board.addShape(this.background);
     }
 
-    // public createTree(statusX: number, statusY: number): IFS {
-    //     const ifsTree = new IFS(new Vector(700, 500), 50000);
-    //     ifsTree.setCenterPoint(new Vector(500, 500));
-    //     const exp1 = new IFSExpression(0.245 + 0.1 * statusX, -0.308, 0.644, 0.45 + 0.1 * statusY, 150.4431, 150.2452, 0.25);
-    //     ifsTree.addExpression(exp1);
-    //     const exp2 = new IFSExpression(0.462, 0.414, -0.252, 0.261, 150.2511, 150.5692, 0.25);
-    //     ifsTree.addExpression(exp2);
-    //     const exp5 = new IFSExpression(-0.637, 0, 0, 0.501, 150.8562, 150.2513, 0.05);
-    //     ifsTree.addExpression(exp5);
-    //     const exp3 = new IFSExpression(-0.058, -0.07, 0.453, -0.111, 150.5976, 150.0969, 0.25);
-    //     ifsTree.addExpression(exp3);
-    //     const exp4 = new IFSExpression(-0.035, 0.07, -0.469, -0.022, 150.4884, 150.5069, 0.20);
-    //     ifsTree.addExpression(exp4);
-    //     const mat = new Matrix([[Math.cos(Math.PI / 2), -Math.sin(Math.PI / 2), 0], [Math.sin(Math.PI / 2), -Math.cos(Math.PI / 2), 0], [0, 0, 1]]);
-    //     ifsTree.addChangeMatrix(mat);
-    //     ifsTree.addChangeMatrix(mat);
-    //     ifsTree.addChangeMatrix(new Matrix([[1, 0, 600], [0, 1, 280], [0, 0, 1]]));
-    //     ifsTree.startLoop();
-    //     return ifsTree;
-    // }
-    //
-    // public updateTree() {
-    //     const pointMap = new PointMap([new Vector(0, 0)], {
-    //         strokeStyle: '#A0522D'
-    //     });
-    //     this.boardTree.addShape(pointMap);
-    //     this.treeUpAnimation = new Linear(new Vector(1, 0), {duration: 6000});
-    //     this.treeUpAnimation.addStatusListener((status: number) => {
-    //         const ifsTree = this.createTree(status, status);
-    //         pointMap.updateWithNewPoint(ifsTree.pointList);
-    //     });
-    //     this.treeUpAnimation.addEventListener((status: AnimationEvent) => {
-    //         // 生长结束
-    //         this.createRain();
-    //         this.rainAnimation.forward()
-    //     });
-    // }
-    //
-    // public createY() {
-    //     // const ifs = new IFS(new Vector(1000, 100), 90000);
-    //     // const exp1 = new IFSExpression(0, 0, 0, 0, 100.16, 0, 0.01);
-    //     //
-    //     // ifs.addExpression(exp1);
-    //     // const exp2 = new IFSExpression(0.2, -0.26, 0.23, 0.22, 0, 101.6, 0.07);
-    //     // ifs.addExpression(exp2);
-    //     // const exp3 = new IFSExpression(-0.15, 0.28, 0.26, 0.24, 0, 100.44, 0.07);
-    //     // ifs.addExpression(exp3);
-    //     // const exp4 = new IFSExpression(0.85, 0.04, -0.04, 0.85, 0, 101.6, 0.85);
-    //     // ifs.addExpression(exp4);
-    //     // ifs.addChangeMatrix(new Matrix([[Math.cos(Math.PI), -Math.sin(Math.PI),0], [Math.sin(Math.PI), -Math.cos(Math.PI),0],[0,0,1]]))
-    //     // ifs.addChangeMatrix(new Matrix([[1,0,200], [0,1,600],[0,0,1]]))
-    //     // ifs.startLoop();
-    //     //
-    //     // const pointMap = new PointMap(ifs.pointList, {
-    //     //     fillStyle: '#000',
-    //     //
-    //     //     strokeStyle: '#000'
-    //     // });
-    // }
+    updateBackgroundColorTo(color: Color, duration: number, onFinish: Function) {
+        const animation = new Linear(new Vector(1, 0), {duration});
+        animation.addEventListener((event: AnimationEvent) => {
+            if (event === AnimationEvent.FORWARD) {
+                this.lastBackgroundColor = color.toHexString();
+                onFinish();
+            }
+        })
+        animation.addStatusListener((status: number) => {
+            this.background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex(this.lastBackgroundColor), color, status).toHexString();
+            this.background.makeStyle();
+            this.background.update();
+        })
+        animation.forward();
+    }
+
+    public createTree(statusX: number, statusY: number): IFS {
+        const ifsTree = new IFS(new Vector(700, 500), 50000);
+        ifsTree.setCenterPoint(new Vector(500, 500));
+        const exp1 = new IFSExpression(0.245 + 0.1 * statusX, -0.308, 0.644, 0.45 + 0.1 * statusY, 150.4431, 150.2452, 0.25);
+        ifsTree.addExpression(exp1);
+        const exp2 = new IFSExpression(0.462, 0.414, -0.252, 0.261, 150.2511, 150.5692, 0.25);
+        ifsTree.addExpression(exp2);
+        const exp5 = new IFSExpression(-0.637, 0, 0, 0.501, 150.8562, 150.2513, 0.05);
+        ifsTree.addExpression(exp5);
+        const exp3 = new IFSExpression(-0.058, -0.07, 0.453, -0.111, 150.5976, 150.0969, 0.25);
+        ifsTree.addExpression(exp3);
+        const exp4 = new IFSExpression(-0.035, 0.07, -0.469, -0.022, 150.4884, 150.5069, 0.20);
+        ifsTree.addExpression(exp4);
+        const mat = new Matrix([[Math.cos(Math.PI / 2), -Math.sin(Math.PI / 2), 0], [Math.sin(Math.PI / 2), -Math.cos(Math.PI / 2), 0], [0, 0, 1]]);
+        ifsTree.addChangeMatrix(mat);
+        ifsTree.addChangeMatrix(mat);
+        ifsTree.addChangeMatrix(new Matrix([[1, 0, 600], [0, 1, 280], [0, 0, 1]]));
+        ifsTree.startLoop();
+        return ifsTree;
+    }
+
+    public updateTree() {
+        const pointMap = new PointMap([new Vector(0, 0)], 1,{
+            strokeStyle: '#A0522D'
+        });
+        this.boardTree.addShape(pointMap);
+        this.treeUpAnimation = new Linear(new Vector(1, 0), {duration: 6000});
+        this.treeUpAnimation.addStatusListener((status: number) => {
+            const ifsTree = this.createTree(status, status);
+            pointMap.updateWithNewPoint(ifsTree.pointList);
+            this.boardTree.paintAll();
+        });
+        this.treeUpAnimation.forward()
+    }
+
+    public createLeaf() {
+        const ifs = new IFS(new Vector(1000, 100), 90000);
+        const exp1 = new IFSExpression(0, 0, 0, 0, 100.16, 0, 0.01);
+        ifs.addExpression(exp1);
+        const exp2 = new IFSExpression(0.2, -0.26, 0.23, 0.22, 0, 101.6, 0.07);
+        ifs.addExpression(exp2);
+        const exp3 = new IFSExpression(-0.15, 0.28, 0.26, 0.24, 0, 100.44, 0.07);
+        ifs.addExpression(exp3);
+        const exp4 = new IFSExpression(0.85, 0.04, -0.04, 0.85, 0, 101.6, 0.85);
+        ifs.addExpression(exp4);
+        ifs.addChangeMatrix(new Matrix([[Math.cos(Math.PI), -Math.sin(Math.PI),0], [Math.sin(Math.PI), -Math.cos(Math.PI),0],[0,0,1]]))
+        ifs.addChangeMatrix(new Matrix([[1,0,800], [0,1,100],[0,0,1]]))
+        ifs.startLoop();
+
+        const pointMap = new PointMap(ifs.pointList, 1,{
+            fillStyle: '#000',
+            strokeStyle: '#000'
+        });
+        this.board.addShape(pointMap);
+        this.board.paintAll();
+    }
 
     public createTreePath(start: Vector, angle: number, length: number, depth: number, branchWidth: number, maxBranch: number = 3) {
         const maxAngle = Math.PI / 2;
@@ -203,8 +246,8 @@ class Season {
         }
     }
 
-    public createRain() {
-        this.rainAnimation = new VariableSpeed(new Vector(-300, 400), new Vector(0, 98), {duration: 5000});
+    public createRain(duration: number, onFinish: Function) {
+        const rainAnimation = new VariableSpeed(new Vector(-300, 400), new Vector(0, 98), {duration});
         const lineMap = new LineMap(new Vector(0, 0), new Vector(this.boardWidth * 2, this.boardHeight), {strokeStyle: '#1E90FF'});
         for (let index = 0; index < 500; index++) {
             const x = Math.random() * this.boardWidth * 2;
@@ -214,19 +257,19 @@ class Season {
         }
         this.board.addShape(lineMap);
         this.board.paintAll();
-        this.rainAnimation.addShape(lineMap);
-        this.rainAnimation.addEventListener((status: AnimationEvent) => {
+        rainAnimation.addShape(lineMap);
+        rainAnimation.addEventListener((status: AnimationEvent) => {
             if (status === AnimationEvent.FORWARD) {
                 this.board.removeShape(lineMap);
-                // 渲染下一帧
-                this.addSun();
+                onFinish();
             }
         })
+        rainAnimation.forward();
 
     }
 
     public createLeafTree() {
-        this.createTreePath(new Vector(this.boardWidth - 400, this.boardHeight - 10), -Math.PI / 2, 90, 11, 14);
+        this.createTreePath(new Vector(this.boardWidth - 400, this.boardHeight - 60), -Math.PI / 2, 90, 11, 14);
         const dp = new DrawMap(new Vector(0, 0), new Vector(this.boardWidth * 2, this.boardHeight), {
             fillRange: false,
             strokeBorder: false
@@ -235,7 +278,11 @@ class Season {
             for (let index = 0; index < this.pathList.length; index++) {
                 const path = this.pathList[index];
                 p.beginPath();
-                p.moveTo(path.start.x, path.start.y);
+                if (path.lineWidth === 14) {
+                    p.moveTo(path.start.x, path.start.y + 50);
+                } else {
+                    p.moveTo(path.start.x, path.start.y);
+                }
                 p.lineCap = 'round';
                 p.lineWidth = path.lineWidth
                 p.strokeStyle = path.color;
@@ -247,7 +294,7 @@ class Season {
         this.boardTree.paintAll();
     }
 
-    public addSun() {
+    public addSun(onFinish: Function) {
         const dp = new Rect(new Vector(-200, 1500), 40, {
             fillStyle: '#FFB90F',
             fillRange: true,
@@ -256,17 +303,18 @@ class Season {
         });
         this.board.addShape(dp);
         this.board.paintAll();
-        const l = new VariableSpeed(new Vector(100, -325), new Vector(0, 0), {duration: 4000});
+        const l = new VariableSpeed(new Vector(133.33, -433.33), new Vector(0, 0), {duration: 3000});
         l.addShape(dp);
         l.addEventListener((status: AnimationEvent) => {
             if (status === AnimationEvent.FORWARD) {
                 setTimeout(() => {
-                    const ls = new VariableSpeed(new Vector(80, -100), new Vector(0, 0), {duration: 4000});
+                    const ls = new VariableSpeed(new Vector(60, -150), new Vector(0, 0), {duration: 2000});
                     ls.addShape(dp);
                     ls.addEventListener((status: AnimationEvent) => {
                         if (status === AnimationEvent.FORWARD) {
                             this.board.removeShape(dp);
                             this.board.paintAll();
+                            onFinish()
                         }
                     })
                     ls.forward();
@@ -290,7 +338,7 @@ class Season {
         }
     }
 
-    public startRunSnow() {
+    public startRunSnow(duration: number, onFinish: Function) {
         this.createSnow();
         const pMap = new DrawMap(new Vector(), new Vector(this.boardWidth, this.boardHeight), {});
         pMap.drawOp((p: CanvasRenderingContext2D) => {
@@ -304,7 +352,7 @@ class Season {
         });
         this.boardSnow.addShape(pMap);
         this.boardSnow.paintAll();
-        this.snowAnimation = new Linear(new Vector(1, 0), {duration: 50000});
+        this.snowAnimation = new Linear(new Vector(1, 0), {duration});
         this.snowAnimation.addStatusListener((status: number) => {
             if (status > 0 && status <= 0.1) {
                 const v = `${(Math.floor((status / 0.1) * 95))}`
@@ -321,6 +369,7 @@ class Season {
             if (e === AnimationEvent.FORWARD) {
                 this.boardSnow.removeShape(pMap);
                 this.boardSnow.paintAll();
+                onFinish();
             }
         })
         this.snowAnimation.forward();
@@ -341,9 +390,22 @@ class Season {
             }
         }
     }
+
+    public runBez(){
+        const r = new Rect(new Vector(200,200),60, {fillStyle: 'red', fillRange: true});
+        this.board.addShape(r);
+        r.enableDrag();
+        this.board.paintAll();
+        const bez = new Bezier(new Vector(0.98, -0.53), new Vector(0.31,1.6), new Vector(400, 400), {duration: 4000});
+        bez.addShape(r);
+        bez.forward();
+    }
 }
 
 
 window.onload = function () {
+    // new Season().createLeaf();
+    // new Season().updateTree();
+    // new Season().runBez();
     new Season().run();
 };
