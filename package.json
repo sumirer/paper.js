@@ -1,33 +1,7 @@
 {
-  "name": "paper.js",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --config ./webpack.dev.config.js",
-    "build": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts\" --ignore \"src/**/*.d.ts\",\"src/**/**/*.d.ts\"",
-    "doc": "typedoc --out doc src/index.ts"
-  },
-  "keywords": [
-    "canvas"
-  ],
-  "author": "sumirer",
-  "license": "MIT",
+  "name": "root",
+  "private": true,
   "devDependencies": {
-    "@babel/cli": "^7.13.10",
-    "@babel/core": "^7.13.10",
-    "@babel/preset-env": "^7.13.10",
-    "@babel/preset-typescript": "^7.13.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "clean-webpack-plugin": "^3.0.0",
-    "html-webpack-plugin": "^5.2.0",
-    "ts-loader": "^8.0.17",
-    "typedoc": "^0.20.33",
-    "typescript": "^4.1.5",
-    "webpack": "^5.23.0",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3"
+    "lerna": "^4.0.0"
   }
 }
