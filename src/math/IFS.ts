@@ -66,7 +66,7 @@ export class IFS {
      * @param point
      */
     public computeWithMatrix(point: Vector): Vector {
-        let newPoint = point.changeWith(this.centerPoint);
+        let newPoint = point.reduceWith(this.centerPoint);
         for (let index = 0; index < this.matrixList.length; index++) {
             newPoint = Vector.fromMatrix(this.matrixList[index].multiply(newPoint.toMatrix()));
         }

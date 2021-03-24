@@ -52,26 +52,26 @@ class Season {
         const lB = new Linear(new Vector(1, 0), {duration: 60000});
         const lC = new Linear(new Vector(1, 0), {duration: 60000});
         const lD = new Linear(new Vector(1, 0), {duration: 60000});
-        lA.addStatusListener((status: number) => {
-            if (status <= 0.25) {
-                // @ts-ignore
-                background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#F0FFF0'), Color.formHex('#FFE7BA'), status / 0.25).toHexString();
-            }
-            if (status > 0.25 && status <= 0.5) {
-                // @ts-ignore
-                background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFE7BA'), Color.formHex('#FFE4B5'), (status - 0.25) / 0.25).toHexString();
-            }
-            if (status > 0.5 && status <= 0.75) {
-                // @ts-ignore
-                background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFE4B5'), Color.formHex('#FFFFFF'), (status - 0.5) / 0.25).toHexString();
-            }
-            if (status > 0.75) {
-                // @ts-ignore
-                background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFFFFF'), Color.formHex('#F0FFF0'), (status - 0.75) / 0.25).toHexString();
-            }
-            background.makeStyle();
-            this.board.paintAll();
-        });
+        // lA.addStatusListener((status: number) => {
+        //     if (status <= 0.25) {
+        //         // @ts-ignore
+        //         background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#F0FFF0'), Color.formHex('#FFE7BA'), status / 0.25).toHexString();
+        //     }
+        //     if (status > 0.25 && status <= 0.5) {
+        //         // @ts-ignore
+        //         background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFE7BA'), Color.formHex('#FFE4B5'), (status - 0.25) / 0.25).toHexString();
+        //     }
+        //     if (status > 0.5 && status <= 0.75) {
+        //         // @ts-ignore
+        //         background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFE4B5'), Color.formHex('#FFFFFF'), (status - 0.5) / 0.25).toHexString();
+        //     }
+        //     if (status > 0.75) {
+        //         // @ts-ignore
+        //         background.style.fillStyle = ColorUtils.getLinearGradientByStep(Color.formHex('#FFFFFF'), Color.formHex('#F0FFF0'), (status - 0.75) / 0.25).toHexString();
+        //     }
+        //     background.makeStyle();
+        //     this.board.paintAll();
+        // });
         this.board.addShape(background);
         lA.forward();
     }
@@ -103,10 +103,10 @@ class Season {
         });
         this.boardTree.addShape(pointMap);
         this.treeUpAnimation = new Linear(new Vector(1, 0), {duration: 6000});
-        this.treeUpAnimation.addStatusListener((status: number) => {
-            const ifsTree = this.createTree(status, status);
-            pointMap.updateWithNewPoint(ifsTree.pointList);
-        });
+        // this.treeUpAnimation.addStatusListener((status: number) => {
+        //     const ifsTree = this.createTree(status, status);
+        //     pointMap.updateWithNewPoint(ifsTree.pointList);
+        // });
         this.treeUpAnimation.addEventListener((status: AnimationEvent) => {
             // 生长结束
             this.createRain();

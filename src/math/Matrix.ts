@@ -33,6 +33,6 @@ export class Matrix {
                 }
             }
         }
-        return new Matrix(newMatrixArray);
+        return Matrix.create(newMatrixArray);
     }
 }

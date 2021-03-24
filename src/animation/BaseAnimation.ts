@@ -1,5 +1,5 @@
 import {BaseShape} from "../shape";
-import {AnimationListener, AnimationStatusListener, IAnimationParams} from "../types/lib";
+import {AnimationListener, AnimationStatusListener, IAnimationParams} from "../types";
 import {Vector} from "../common";
 
 export enum AnimationEvent {
@@ -150,12 +150,12 @@ export abstract class BaseAnimation {
     private stopAnimation(eventType: AnimationEvent): void {
         window.cancelAnimationFrame(this.requestId);
         this.requestId = -1;
-        if (this.stop) {
-            this.listener.forEach(item => item(AnimationEvent.CANCEL));
-        } else {
-            this.stop = true;
-            this.listener.forEach(item => item(eventType));
-        }
+        // if (this.stop) {
+        //     this.listener.forEach(item => item(AnimationEvent.CANCEL));
+        // } else {
+        //     this.stop = true;
+        //     this.listener.forEach(item => item(eventType));
+        // }
     }
 
     /**
@@ -167,7 +167,7 @@ export abstract class BaseAnimation {
         if (!this.lastVector) {
             this.lastVector = vector;
         }
-        this.statusListener.forEach(listener => listener(duration / this.duration));
+        // this.statusListener.forEach(listener => listener(duration / this.duration));
         this.itemList.forEach(shape => {
             if (shape instanceof Vector || shape.canAnimated) {
                 // @ts-ignore

@@ -28,15 +28,26 @@ export class Vector {
         return Matrix.create([[this.x], [this.y], [this.z]]);
     }
 
-    changeWith(vector: Vector): Vector {
+    reduceWith(vector: Vector): Vector {
         this.x -= vector.x;
         this.y -= vector.y;
         this.z -= vector.z;
         return this;
     }
 
+    addWith(vector: Vector): Vector {
+        this.x += vector.x;
+        this.y += vector.y;
+        this.z += vector.z;
+        return this;
+    }
+
     static fromMatrix(matrix: Matrix): Vector {
         return new Vector(matrix.matrix[0][0], matrix.matrix[1][0], matrix.matrix[2][0]);
+    }
+
+    static create(x = 0, y = 0, z = 0) {
+        return new Vector(x, y, z);
     }
 }
 
