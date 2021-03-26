@@ -1,20 +1,11 @@
 0 silly argv {
-0 silly argv   _: [ 'import' ],
+0 silly argv   _: [ 'add' ],
+0 silly argv   globs: [],
 0 silly argv   lernaVersion: '4.0.0',
 0 silly argv   '$0': 'C:\\Users\\85615\\AppData\\Roaming\\npm\\node_modules\\lerna\\cli.js',
-0 silly argv   dir: '../paper.js'
+0 silly argv   pkg: '@paper.js/paper-core'
 0 silly argv }
 1 notice cli v4.0.0
-2 verbose rootPath E:\myCode\lerna-test
-3 error Error: Command failed with exit code 128: git rev-parse HEAD
-3 error fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
-3 error Use '--' to separate paths from revisions, like this:
-3 error 'git <command> [<revision>...] -- [<file>...]'
-3 error HEAD
-3 error     at makeError (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\lib\error.js:59:11)
-3 error     at Function.module.exports.sync (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:186:17)
-3 error     at Object.execSync (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\child-process\index.js:39:16)
-3 error     at ImportCommand.execSync (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\import\index.js:141:25)
-3 error     at ImportCommand.getCurrentSHA (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\import\index.js:133:17)
-3 error     at ImportCommand.initialize (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\import\index.js:102:31)
-3 error     at C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\command\index.js:274:24
+2 verbose rootPath E:\myCode\paper.js
+3 error Error: 404 Not Found - GET https://registry.npmjs.org/@paper.js%2fpaper-core - Not found
+3 error     at C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-registry-fetch\check-response.js:123:15
