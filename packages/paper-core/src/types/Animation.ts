@@ -14,6 +14,7 @@ export interface IAnimationEvent {
 export interface IAnimationStatus {
     progress: number;
     position: Vector;
+    offset: Vector;
 }
 
 export type AnimationEventListener = (event: IAnimationEvent) => void;

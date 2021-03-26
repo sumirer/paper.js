@@ -28,5 +28,4 @@ export default class Linear extends Travel {
     next(percentage: number): Vector {
         return Vector.create(this.distanceX * percentage, this.distanceY * percentage, this.distanceZ * percentage);
     }
-
 }
