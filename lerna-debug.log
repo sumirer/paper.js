@@ -1,14 +1,28 @@
-15 error Error: Command failed with exit code 1: git remote update
-15 error fatal: unable to access 'https://github.com/sumirer/paper.js.git/': OpenSSL SSL_read: Connection was reset, errno 10054
-15 error error: Could not fetch origin
-15 error Auto packing the repository in background for optimum performance.
-15 error See "git help gc" for manual housekeeping.
-15 error warning: There are too many unreachable loose objects; run 'git prune' to remove them.
-15 error Fetching origin
-15 error Nothing new to pack.
-15 error     at makeError (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\lib\error.js:59:11)
-15 error     at Function.module.exports.sync (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:186:17)
-15 error     at Object.execSync (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\child-process\index.js:39:16)
-15 error     at updateRemote (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\version\lib\is-behind-upstream.js:34:16)
-15 error     at isBehindUpstream (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\version\lib\is-behind-upstream.js:16:3)
-15 error     at VersionCommand.initialize (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\version\index.js:153:9)
+40 error Error: Command failed with exit code 1: git add -- packages/paper-core/package.json packages/paper-core/package-lock.json packages/paper-helper/package.json packages/paper-helper/package-lock.json packages/paper-animation/package.json packages/paper-animation/package-lock.json packages/paper-canvas/package.json packages/paper-canvas/package-lock.json packages/paper-drag/package.json packages/paper-drag/package-lock.json lerna.json
+40 error warning: LF will be replaced by CRLF in lerna.json.
+40 error The file will have its original line endings in your working directory
+40 error warning: LF will be replaced by CRLF in packages/paper-animation/package.json.
+40 error The file will have its original line endings in your working directory
+40 error warning: LF will be replaced by CRLF in packages/paper-canvas/package.json.
+40 error The file will have its original line endings in your working directory
+40 error warning: LF will be replaced by CRLF in packages/paper-core/package-lock.json.
+40 error The file will have its original line endings in your working directory
+40 error warning: LF will be replaced by CRLF in packages/paper-core/package.json.
+40 error The file will have its original line endings in your working directory
+40 error warning: LF will be replaced by CRLF in packages/paper-drag/package.json.
+40 error The file will have its original line endings in your working directory
+40 error warning: LF will be replaced by CRLF in packages/paper-helper/package-lock.json.
+40 error The file will have its original line endings in your working directory
+40 error warning: LF will be replaced by CRLF in packages/paper-helper/package.json.
+40 error The file will have its original line endings in your working directory
+40 error The following paths are ignored by one of your .gitignore files:
+40 error packages/paper-animation/package-lock.json
+40 error packages/paper-canvas/package-lock.json
+40 error packages/paper-drag/package-lock.json
+40 error hint: Use -f if you really want to add them.
+40 error hint: Turn this message off by running
+40 error hint: "git config advice.addIgnoredFile false"
+40 error     at makeError (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\lib\error.js:59:11)
+40 error     at handlePromise (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:114:26)
+40 error     at processTicksAndRejections (internal/process/task_queues.js:93:5)
+40 error     at async Promise.all (index 0)
