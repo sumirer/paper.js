@@ -4,19 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _animation = require("./animation");
-
-Object.keys(_animation).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _animation[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _animation[key];
-    }
-  });
-});
-
 var _common = require("./common");
 
 Object.keys(_common).forEach(function (key) {
@@ -52,6 +39,19 @@ Object.keys(_math).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _math[key];
+    }
+  });
+});
+
+var _travel = require("./travel");
+
+Object.keys(_travel).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _travel[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _travel[key];
     }
   });
 });

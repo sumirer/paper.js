@@ -1,0 +1,14 @@
+# Project exclude paths
+/dist/
+/node_modules/
+/lib/
+test.js
+.idea
+package-lock.json
+**/node_modules
+/packages/*/package-lock.json
+/packages/*/lib
+/packages/*/dist
+packages/**/test.js
+**/.idea
+**/dist

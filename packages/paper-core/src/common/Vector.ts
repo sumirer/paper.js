@@ -1,4 +1,4 @@
-import {Matrix} from "../math";
+import {Matrix} from ".";
 
 export class Vector {
 

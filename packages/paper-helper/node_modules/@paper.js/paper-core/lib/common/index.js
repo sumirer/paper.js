@@ -55,3 +55,16 @@ Object.keys(_Color).forEach(function (key) {
     }
   });
 });
+
+var _Matrix = require("./Matrix");
+
+Object.keys(_Matrix).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _Matrix[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _Matrix[key];
+    }
+  });
+});

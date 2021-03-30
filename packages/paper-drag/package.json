@@ -1,19 +1,17 @@
 {
-  "name": "@paper.js/paper-core",
+  "name": "@paper.js/paper-drag",
   "version": "1.0.0",
   "description": "",
-  "main": "./index.ts",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts\" --ignore \"src/**/*.d.ts\",\"src/**/**/*.d.ts\"",
-    "doc": "typedoc --out doc src/index.ts"
+    "doc": "typedoc --out doc src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "canvas"
-  ],
-  "author": "sumirer",
-  "license": "MIT",
-  "devDependencies": {
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@paper.js/paper-core": "^1.0.0",
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",

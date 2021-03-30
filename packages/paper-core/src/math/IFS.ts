@@ -1,5 +1,5 @@
 import {Vector} from "../common";
-import {Matrix} from "./Matrix";
+import {Matrix} from "../common/Matrix";
 
 export class IFS {
     constructor(startPoint: Vector, loopCount: number) {

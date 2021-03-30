@@ -1,5 +1,5 @@
 {
-  "name": "@paper.js/paper-core",
+  "name": "@paper.js/paper-animation",
   "version": "1.0.0",
   "description": "",
   "main": "./index.ts",
@@ -14,6 +14,7 @@
   "author": "sumirer",
   "license": "MIT",
   "devDependencies": {
+    "@paper.js/paper-core": "^1.0.0",
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",

@@ -3,9 +3,13 @@
 0 silly argv   globs: [],
 0 silly argv   lernaVersion: '4.0.0',
 0 silly argv   '$0': 'C:\\Users\\85615\\AppData\\Roaming\\npm\\node_modules\\lerna\\cli.js',
-0 silly argv   pkg: '@paper.js/paper-core'
+0 silly argv   pkg: '@paper-core'
 0 silly argv }
 1 notice cli v4.0.0
 2 verbose rootPath E:\myCode\paper.js
-3 error Error: 404 Not Found - GET https://registry.npmjs.org/@paper.js%2fpaper-core - Not found
-3 error     at C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-registry-fetch\check-response.js:123:15
+3 error Error: Invalid tag name "@paper-core": Tags may not have any characters that encodeURIComponent encodes.
+3 error     at invalidTagName (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-package-arg\npa.js:94:15)
+3 error     at fromRegistry (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-package-arg\npa.js:299:13)
+3 error     at resolve (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-package-arg\npa.js:84:12)
+3 error     at npa (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-package-arg\npa.js:55:10)
+3 error     at AddCommand.initialize (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\add\index.js:39:17)
