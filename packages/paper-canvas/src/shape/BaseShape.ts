@@ -1,21 +1,20 @@
-import {IMouseEventConsumer, IShapeStyle} from "../types";
 
 import {Vector, BoundingClientRect} from "@paper.js/paper-core/lib";
 
 
-export abstract class BaseShape implements IMouseEventConsumer {
+export abstract class BaseShape {
 
-    protected constructor(points: Array<Vector>, style: IShapeStyle = {}) {
-        this.style = style;
-        this.points = points;
-        this.fill = !!style.fillRange;
-        this.stroke = !!style.strokeBorder;
+    protected constructor(points: Array<Vector>) {
+        // this.style = style;
+        // this.points = points;
+        // this.fill = !!style.fillRange;
+        // this.stroke = !!style.strokeBorder;
         const xList = points.map(point => point.x);
         const yList = points.map(point => point.y);
         this.boundingClientRect = new BoundingClientRect(Math.min(...xList), Math.min(...yList), Math.max(...xList), Math.max(...yList));
     }
 
-    public style: IShapeStyle = {};
+    // public style: IShapeStyle = {};
 
     public fill: boolean = false;
 
@@ -92,33 +91,6 @@ export abstract class BaseShape implements IMouseEventConsumer {
         this.drag = false;
     }
 
-    onMouseDown(point: Vector, event: MouseEvent) {
-        this.canAnimated = false;
-        if (!this.drag) {
-            return;
-        }
-        this.canMove = true;
-        this.lastPoint = point;
-    };
-
-    onMouseMove(point: Vector, event: MouseEvent) {
-        if (!this.drag || !this.canMove) {
-            return;
-        }
-        if (!this.lastPoint) {
-            return;
-        }
-        this.moveTo(point);
-    }
-
-
-    onMouseUp(point: Vector, event: MouseEvent) {
-        this.canMove = false;
-        if (this.keepAnimationAfterDrag) {
-            this.canAnimated = true;
-        }
-    }
-
     public moveTo(point: Vector) {
         this.move(this.lastPoint ? point.x - this.lastPoint.x : 0, this.lastPoint ? point.y - this.lastPoint.y : 0, point);
     }
@@ -153,26 +125,26 @@ export abstract class BaseShape implements IMouseEventConsumer {
      * set shape style
      */
     public makeStyle(): void {
-        const defaultStyle = Object.assign({
-            paint: undefined,
-            fillStyle: undefined,
-            direction: undefined,
-            filter: undefined,
-            globalAlpha: undefined,
-            globalCompositeOperation: undefined,
-            font: undefined,
-            lineWidth: undefined,
-            lineDashOffset: undefined,
-            shadowBlur: undefined,
-            shadowColor: undefined,
-            shadowOffsetX: undefined,
-            shadowOffsetY: undefined,
-            textAlign: undefined,
-            textBaseline: undefined,
-            imageSmoothingEnabled: undefined,
-            strokeStyle: undefined,
-        }, this.style);
-        Object.assign(this.paint, defaultStyle);
+        // const defaultStyle = Object.assign({
+        //     paint: undefined,
+        //     fillStyle: undefined,
+        //     direction: undefined,
+        //     filter: undefined,
+        //     globalAlpha: undefined,
+        //     globalCompositeOperation: undefined,
+        //     font: undefined,
+        //     lineWidth: undefined,
+        //     lineDashOffset: undefined,
+        //     shadowBlur: undefined,
+        //     shadowColor: undefined,
+        //     shadowOffsetX: undefined,
+        //     shadowOffsetY: undefined,
+        //     textAlign: undefined,
+        //     textBaseline: undefined,
+        //     imageSmoothingEnabled: undefined,
+        //     strokeStyle: undefined,
+        // }, this.style);
+        // Object.assign(this.paint, defaultStyle);
     }
 
     /**

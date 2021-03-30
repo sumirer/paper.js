@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts\" --ignore \"src/**/*.d.ts\",\"src/**/**/*.d.ts\""
+    "build": "tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts\" --ignore \"src/**/*.d.ts\",\"src/**/**/*.d.ts\"",
+    "doc": "typedoc --out ../../doc/paper-canvas src/index.ts"
   },
   "author": "",
   "license": "ISC",
