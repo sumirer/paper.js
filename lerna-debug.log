@@ -1,4 +1,4 @@
-40 error Error: Command failed with exit code 1: git add -- packages/paper-core/package.json packages/paper-core/package-lock.json packages/paper-helper/package.json packages/paper-helper/package-lock.json packages/paper-animation/package.json packages/paper-animation/package-lock.json packages/paper-canvas/package.json packages/paper-canvas/package-lock.json packages/paper-drag/package.json packages/paper-drag/package-lock.json lerna.json
+40 error Error: Command failed with exit code 1: git add -- packages/paper-core/package.json packages/paper-core/package-lock.json packages/paper-canvas/package.json packages/paper-canvas/package-lock.json packages/paper-drag/package.json packages/paper-drag/package-lock.json packages/paper-animation/package.json packages/paper-animation/package-lock.json packages/paper-helper/package.json packages/paper-helper/package-lock.json lerna.json
 40 error warning: LF will be replaced by CRLF in lerna.json.
 40 error The file will have its original line endings in your working directory
 40 error warning: LF will be replaced by CRLF in packages/paper-animation/package.json.

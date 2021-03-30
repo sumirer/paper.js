@@ -10,5 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@paper.js/paper-core": "^0.0.1"
-  }
+  },
+  "gitHead": "b82d8088f55f7a177438a5bd615a80d6e2105e1c"
 }
