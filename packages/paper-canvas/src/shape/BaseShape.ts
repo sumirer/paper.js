@@ -1,6 +1,6 @@
 import {IMouseEventConsumer, IShapeStyle} from "../types";
-import {BoundingClientRect} from "../common";
-import {Vector} from "../common";
+
+import {Vector, BoundingClientRect} from "@paper.js/paper-core/lib";
 
 
 export abstract class BaseShape implements IMouseEventConsumer {

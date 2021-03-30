@@ -6,9 +6,9 @@ import {
     IAnimationEvent,
     IAnimationStatus
 } from "./types";
-import Ticker from "./Ticker";
+import {Ticker} from "./Ticker";
 
-export default class Actuator {
+export class Actuator {
 
     /**
      * all event listener queue

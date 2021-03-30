@@ -1,6 +1,6 @@
 import {TickType} from "./types";
 
-export default abstract class Ticker {
+export abstract class Ticker {
 
     protected constructor(duration: number) {
         this.duration = duration;

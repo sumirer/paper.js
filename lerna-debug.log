@@ -1,15 +1,21 @@
 0 silly argv {
-0 silly argv   _: [ 'add' ],
-0 silly argv   globs: [],
+0 silly argv   _: [ 'run' ],
 0 silly argv   lernaVersion: '4.0.0',
 0 silly argv   '$0': 'C:\\Users\\85615\\AppData\\Roaming\\npm\\node_modules\\lerna\\cli.js',
-0 silly argv   pkg: '@paper-core'
+0 silly argv   script: 'doc'
 0 silly argv }
 1 notice cli v4.0.0
 2 verbose rootPath E:\myCode\paper.js
-3 error Error: Invalid tag name "@paper-core": Tags may not have any characters that encodeURIComponent encodes.
-3 error     at invalidTagName (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-package-arg\npa.js:94:15)
-3 error     at fromRegistry (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-package-arg\npa.js:299:13)
-3 error     at resolve (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-package-arg\npa.js:84:12)
-3 error     at npa (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\npm-package-arg\npa.js:55:10)
-3 error     at AddCommand.initialize (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\add\index.js:39:17)
+3 error JSONError: Unexpected token "}" (0x7D) in JSON at position 317 while parsing near ".../**/**/*.d.ts\\\"\",\n  },\n  \"author\": \"\",\n ..." in packages\paper-canvas\package.json
+3 error
+3 error [0m [90m  7 |[39m     [32m"test"[39m[33m:[39m [32m"echo \"Error: no test specified\" && exit 1"[39m[33m,[39m[0m
+3 error [0m [90m  8 |[39m     [32m"build"[39m[33m:[39m [32m"tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts\" --ignore \"src/**/*.d.ts\",\"src/**/**/*.d.ts\""[39m[33m,[39m[0m
+3 error [0m[31m[1m>[22m[39m[90m  9 |[39m   }[33m,[39m[0m
+3 error [0m [90m    |[39m   [31m[1m^[22m[39m[0m
+3 error [0m [90m 10 |[39m   [32m"author"[39m[33m:[39m [32m""[39m[33m,[39m[0m
+3 error [0m [90m 11 |[39m   [32m"license"[39m[33m:[39m [32m"ISC"[39m[33m,[39m[0m
+3 error [0m [90m 12 |[39m   [32m"dependencies"[39m[33m:[39m {[0m
+3 error
+3 error     at parseJson (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\parse-json\index.js:29:21)
+3 error     at parse (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\load-json-file\index.js:15:9)
+3 error     at module.exports (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\load-json-file\index.js:18:47)

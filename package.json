@@ -1,7 +1,11 @@
 {
   "name": "paper.js",
-  "private": true,
+  "private": false,
   "devDependencies": {
     "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "build:doc": "lerna run doc",
+    "build:lib": "lerna run build"
   }
 }

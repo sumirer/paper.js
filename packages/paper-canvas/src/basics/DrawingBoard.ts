@@ -1,5 +1,5 @@
 import {BaseShape} from "../shape";
-import {Vector} from "../common";
+import {Vector} from "@paper.js/paper-core/lib";
 
 export class DrawingBoard {
 

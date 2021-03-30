@@ -1,4 +1,4 @@
-import Ticker from "./Ticker";
+import {Ticker} from "./Ticker";
 import {BezierUtils, Vector} from "@paper.js/paper-core/lib";
 
 
