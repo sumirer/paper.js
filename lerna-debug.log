@@ -1,21 +1,14 @@
-0 silly argv {
-0 silly argv   _: [ 'run' ],
-0 silly argv   lernaVersion: '4.0.0',
-0 silly argv   '$0': 'C:\\Users\\85615\\AppData\\Roaming\\npm\\node_modules\\lerna\\cli.js',
-0 silly argv   script: 'doc'
-0 silly argv }
-1 notice cli v4.0.0
-2 verbose rootPath E:\myCode\paper.js
-3 error JSONError: Unexpected token "}" (0x7D) in JSON at position 317 while parsing near ".../**/**/*.d.ts\\\"\",\n  },\n  \"author\": \"\",\n ..." in packages\paper-canvas\package.json
-3 error
-3 error [0m [90m  7 |[39m     [32m"test"[39m[33m:[39m [32m"echo \"Error: no test specified\" && exit 1"[39m[33m,[39m[0m
-3 error [0m [90m  8 |[39m     [32m"build"[39m[33m:[39m [32m"tsc --emitDeclarationOnly && babel src --out-dir lib --extensions \".ts\" --ignore \"src/**/*.d.ts\",\"src/**/**/*.d.ts\""[39m[33m,[39m[0m
-3 error [0m[31m[1m>[22m[39m[90m  9 |[39m   }[33m,[39m[0m
-3 error [0m [90m    |[39m   [31m[1m^[22m[39m[0m
-3 error [0m [90m 10 |[39m   [32m"author"[39m[33m:[39m [32m""[39m[33m,[39m[0m
-3 error [0m [90m 11 |[39m   [32m"license"[39m[33m:[39m [32m"ISC"[39m[33m,[39m[0m
-3 error [0m [90m 12 |[39m   [32m"dependencies"[39m[33m:[39m {[0m
-3 error
-3 error     at parseJson (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\parse-json\index.js:29:21)
-3 error     at parse (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\load-json-file\index.js:15:9)
-3 error     at module.exports (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\load-json-file\index.js:18:47)
+15 error Error: Command failed with exit code 1: git remote update
+15 error fatal: unable to access 'https://github.com/sumirer/paper.js.git/': OpenSSL SSL_read: Connection was reset, errno 10054
+15 error error: Could not fetch origin
+15 error Auto packing the repository in background for optimum performance.
+15 error See "git help gc" for manual housekeeping.
+15 error warning: There are too many unreachable loose objects; run 'git prune' to remove them.
+15 error Fetching origin
+15 error Nothing new to pack.
+15 error     at makeError (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\lib\error.js:59:11)
+15 error     at Function.module.exports.sync (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:186:17)
+15 error     at Object.execSync (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\child-process\index.js:39:16)
+15 error     at updateRemote (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\version\lib\is-behind-upstream.js:34:16)
+15 error     at isBehindUpstream (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\version\lib\is-behind-upstream.js:16:3)
+15 error     at VersionCommand.initialize (C:\Users\85615\AppData\Roaming\npm\node_modules\lerna\node_modules\@lerna\version\index.js:153:9)
